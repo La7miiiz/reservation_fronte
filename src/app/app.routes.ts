@@ -27,6 +27,12 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/home/home').then(m => m.HomeComponent)
   },
   {
+    path: 'rooms',
+    loadComponent: () =>
+      import('./pages/rooms-list/rooms-list').then((m) => m.RoomsListComponent),
+    // Add canActivate: [AuthGuard] if protection is needed
+  },
+  {
     path: '',
     redirectTo: 'login',
     pathMatch: 'full'

@@ -1,0 +1,17 @@
+<div class="rooms-layout">
+  <app-side-nav></app-side-nav>
+
+  <div class="rooms-main">
+    <h1>Liste des Salles</h1>
+    <div class="rooms-list">
+      <div class="room-card" *ngFor="let room of rooms">
+        <div class="room-info">
+          <h3>{{ room.name }}</h3>
+          <p>{{ room.description }}</p>
+          <span><strong>Capacité :</strong> {{ room.capacity }}</span>
+          <button (click)="reserveRoom(room)">Réserver</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,12 +1,13 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { parseJwt } from '../../core/utils/jwt-utils'; // adjust path
+import { parseJwt } from '../../core/utils/jwt-utils';
+import { SideNavComponent } from "../../shared/side-nav/side-nav"; // adjust path
 
 @Component({
   selector: 'app-profile',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, SideNavComponent],
   templateUrl: './profile.html',
   styleUrls: ['./profile.css'],
 })

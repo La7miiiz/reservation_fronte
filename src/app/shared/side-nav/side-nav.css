@@ -1,0 +1,26 @@
+.side-nav {
+  background: #283593;
+  padding: 260px 20px;
+  display: flex;
+  flex-direction: column;
+  position: fixed; 
+  gap: 18px;
+  min-width: 170px;
+}
+
+.side-nav button {
+  background: #fff;
+  color: #283593;
+  border: none;
+  border-radius: 4px;
+  padding: 12px;
+  font-size: 1rem;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.16s, color 0.16s;
+}
+
+.side-nav button:hover {
+  background: #e3e7ee;
+  color: #1a237e;
+}
