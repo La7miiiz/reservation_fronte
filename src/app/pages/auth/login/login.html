@@ -1,12 +1,33 @@
 <div class="login-container">
   <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-    <label>Email</label>
-    <input type="email" formControlName="email" placeholder="Email" />
+    <label for="email">Email</label>
+    <input
+      id="email"
+      type="email"
+      formControlName="email"
+      placeholder="Email"
+      autocomplete="username"
+    />
 
-    <label>Mot de passe</label>
-    <input type="password" formControlName="motDePasse" placeholder="Mot de passe" />
+    <label for="password">Mot de passe</label>
+    <input
+      id="password"
+      type="password"
+      formControlName="motDePasse"
+      placeholder="Mot de passe"
+      autocomplete="current-password"
+    />
 
-    <button type="submit" [disabled]="loginForm.invalid">Se connecter</button>
-    <button type="submit" >S'inscrire</button>
+    <div *ngIf="successMessage" style="color: green; margin-bottom: 12px;">
+      {{ successMessage }}
+    </div>
+    <div *ngIf="errorMessage" class="login-error">
+      {{ errorMessage }}
+    </div>
+
+    <div class="login-buttons">
+      <button type="submit" [disabled]="loginForm.invalid">Se connecter</button>
+      <button type="button" (click)="goToRegister()">S'inscrire</button>
+    </div>
   </form>
 </div>
