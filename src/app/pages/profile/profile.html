@@ -1,11 +1,23 @@
-<div class="profile-container">
-  <h2>Profil utilisateur</h2>
-  <div class="profile-info">
-    <p><strong>Nom:</strong> {{ user.nom }}</p>
-    <p><strong>Email:</strong> {{ user.email }}</p>
-    <!-- Add more user fields as needed -->
-  </div>
-  <button>Modifier le profil</button>
-</div>
+<div class="profile-layout">
+  <!-- Side Navigation -->
+  <nav class="side-nav">
+    <button (click)="goTo('profile')">Profil</button>
+    <button (click)="goTo('home')">Accueil</button>
+    <button (click)="goTo('reservations')">Réservations</button>
+    <button (click)="goTo('rooms')">Liste des salles</button>
+  </nav>
 
-<app-footer></app-footer>
+  <!-- Main Content -->
+  <div class="profile-main">
+    <div class="profile-card">
+      <img
+        class="profile-picture"
+        [src]="user.profilePic || defaultProfilePic"
+        alt="Profile Picture"
+      />
+      <h2>{{ user.nom || user.name || user.sub }}</h2>
+      <p><strong>Email:</strong> {{ user.email || user.sub }}</p>
+      <button class="edit-btn" (click)="editProfile()">Modifier le profil</button>
+    </div>
+  </div>
+</div>
