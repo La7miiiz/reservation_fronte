@@ -3,11 +3,11 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../../core/services/auth';
-
+import { FooterComponent } from '../../../shared/footer/footer';
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, FooterComponent],
   templateUrl: './login.html',
   styleUrls: ['./login.css'],
 })
@@ -38,11 +38,10 @@ export class LoginComponent {
           localStorage.setItem('salle_token', res.token);
         }
         this.errorMessage = null;
-        this.successMessage = "Connexion réussie !";
         setTimeout(() => {
           this.successMessage = null;
-          this.router.navigateByUrl('/');
-        }, 1200); // Show success message for a moment before redirect
+          this.router.navigateByUrl('/home');
+        },); 
       },
       error: (err) => {
         this.errorMessage = err.error?.error || 'Email ou mot de passe incorrect';

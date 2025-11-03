@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { provideHttpClient, withRequestsMadeViaParent } from '@angular/common/http';
-import { AuthInterceptor } from './core/interceptors/auth-interceptor';
+import { AuthGuard } from './core/guards/auth.guard';
+
 
 export const routes: Routes = [
   {
@@ -8,14 +9,22 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/auth/login/login').then(m => m.LoginComponent),
     providers: [
       provideHttpClient(withRequestsMadeViaParent()),
-      // You may add interceptors here if you don't provide them globally
-      // withInterceptors([AuthInterceptor]),
     ]
   },
   {
     path: 'register',
     loadComponent: () => import('./pages/auth/register/register/register').then(m => m.RegisterComponent)
-    // No need for providers here unless you want to customize http client/interceptors
+  },
+  {
+  path: 'profile',
+  canActivate: [AuthGuard], // protect with your guard
+  loadComponent: () => import('./pages/profile/profile').then(m => m.ProfileComponent)
+  },
+
+  {
+    path: 'home',
+    canActivate: [AuthGuard],
+    loadComponent: () => import('./pages/home/home').then(m => m.HomeComponent)
   },
   {
     path: '',

@@ -1,1 +1,10 @@
-/* You can add global styles to this file, and also import other style files */
+body, html {
+  margin: 0;
+  padding: 0;
+}
+.main-content {
+  min-height: calc(100vh - 120px); /* Adjust if header/footer get bigger */
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0 auto;
+}

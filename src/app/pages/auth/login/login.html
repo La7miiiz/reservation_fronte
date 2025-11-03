@@ -17,10 +17,6 @@
       placeholder="Mot de passe"
       autocomplete="current-password"
     />
-
-    <div *ngIf="successMessage" style="color: green; margin-bottom: 12px;">
-      {{ successMessage }}
-    </div>
     <div *ngIf="errorMessage" class="login-error">
       {{ errorMessage }}
     </div>
@@ -31,3 +27,4 @@
     </div>
   </form>
 </div>
+<app-footer></app-footer>

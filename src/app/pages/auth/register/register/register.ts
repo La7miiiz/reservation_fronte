@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../../../core/services/auth';
+import { FooterComponent } from '../../../../shared/footer/footer';
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, FooterComponent],
   templateUrl: './register.html',
   styleUrls: ['./register.css'],
 })
@@ -38,7 +39,7 @@ export class RegisterComponent {
       next: (user) => {
         this.successMessage = "Compte créé avec succès !";
         this.errorMessage = null;
-        setTimeout(() => this.router.navigateByUrl('/login'), 1500); // Redirect to login
+        setTimeout(() => this.router.navigateByUrl('/login'), 1500); 
       },
       error: (err) => {
         this.errorMessage = err.error?.error || 'Erreur lors de la création du compte.';

@@ -1,0 +1,14 @@
+.footer {
+  width: 100vw;
+  min-width: 100vw;
+  left: 0;
+  bottom: 0;
+  margin: 0;
+  padding: 20px 0;
+  position: fixed;  /* Makes sure it always sits at the bottom */
+  background: #283593;
+  color: #fff;
+  text-align: center;
+  font-size: 1rem;
+  z-index: 100;
+}
