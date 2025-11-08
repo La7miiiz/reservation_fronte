@@ -2,16 +2,26 @@
   <app-side-nav></app-side-nav>
 
   <div class="rooms-main">
-    <h1>Liste des Salles</h1>
-    <div class="rooms-list">
-      <div class="room-card" *ngFor="let room of rooms">
-        <div class="room-info">
-          <h3>{{ room.name }}</h3>
-          <p>{{ room.description }}</p>
-          <span><strong>Capacité :</strong> {{ room.capacity }}</span>
-          <button (click)="reserveRoom(room)">Réserver</button>
-        </div>
-      </div>
+  <h1>Liste des Salles</h1>
+  <button *ngIf="isAdmin" class="create-room-btn" (click)="goToCreateRoom()">Créer une salle</button>
+  <div class="rooms-grid">
+  <div *ngFor="let salle of rooms" class="room-card">
+    <div class="room-status" [ngClass]="salle.disponible ? 'available' : 'not-available'">
+      {{ salle.disponible ? 'Disponible' : 'Indisponible' }}
+    </div>
+    <h2>{{ salle.nom }}</h2>
+    <p *ngIf="salle.description">{{ salle.description }}</p>
+    <p>Capacité: {{ salle.capacite }}</p>
+    <button (click)="reserveRoom(salle)">Réserver</button>
+    
+    <!-- Only show to admin -->
+    <div *ngIf="isAdmin" class="admin-room-actions">
+      <button class="edit-btn" (click)="editRoom(salle)">Éditer</button>
+      <button class="delete-btn" (click)="deleteRoom(salle)">Supprimer</button>
     </div>
   </div>
 </div>
+</div>
+
+
+

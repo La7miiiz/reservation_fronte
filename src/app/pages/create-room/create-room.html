@@ -1,0 +1,24 @@
+<div class="create-room-layout">
+  <app-side-nav></app-side-nav>
+  <div class="create-room-main">
+    <h1>Créer une salle</h1>
+    <form [formGroup]="roomForm" (ngSubmit)="submitRoom()" class="create-room-form">
+      <label for="nom">Nom de la salle</label>
+      <input id="nom" formControlName="nom" required />
+
+      <label for="capacite">Capacité</label>
+      <input id="capacite" type="number" min="1" formControlName="capacite" required />
+
+      <label for="description">Description</label>
+        <textarea id="description" formControlName="description" rows="3" required></textarea>
+
+      <label>
+        <input type="checkbox" formControlName="disponible"/>
+        Disponible
+      </label>
+
+      <button type="submit" [disabled]="roomForm.invalid">Créer</button>
+      <div *ngIf="success" class="room-success">Salle créée avec succès!</div>
+    </form>
+  </div>
+</div>

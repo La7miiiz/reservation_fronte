@@ -1,7 +1,9 @@
-import { Component, inject } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { SideNavComponent } from "../../shared/side-nav/side-nav";
+import { RoomsService } from '../../core/services/rooms';
+
 @Component({
   selector: 'app-rooms-list',
   standalone: true,
@@ -9,26 +11,50 @@ import { SideNavComponent } from "../../shared/side-nav/side-nav";
   templateUrl: './rooms-list.html',
   styleUrls: ['./rooms-list.css'],
 })
-export class RoomsListComponent {
-  private router = inject(Router);
+export class RoomsListComponent implements OnInit {
+  rooms: any[] = [];
+  isAdmin = false;
 
-  rooms = [
-    {
-      name: 'Salle A',
-      description: 'Grande salle lumineuse, idéale pour réunions et séminaires.',
-      capacity: 30,
-    },
-    {
-      name: 'Salle B',
-      description: 'Salle de conférence moderne avec projecteur.',
-      capacity: 20,
-    },
-    {
-      name: 'Salle C',
-      description: 'Petite salle pour ateliers et réunions en petit groupe.',
-      capacity: 10,
+  constructor(private router: Router, private roomsService: RoomsService) {}
+
+  ngOnInit() {
+    this.isAdmin = this.getUserRole() === 'ADMIN';
+    this.reloadRooms();
+  }
+
+  getUserRole(): string | null {
+    const token = localStorage.getItem('salle_token');
+    if (!token) return null;
+    try {
+      const payload = JSON.parse(atob(token.split('.')[1]));
+      return payload.role || null;
+    } catch {
+      return null;
     }
-  ];
+  }
+
+  editRoom(salle: any) {
+    this.router.navigate(['/rooms/edit', salle.id]);
+  }
+
+  deleteRoom(salle: any) {
+    if (confirm(`Voulez-vous vraiment supprimer ${salle.nom} ?`)) {
+      this.roomsService.deleteRoom(salle.id).subscribe({
+        next: () => this.reloadRooms(),
+        error: err => alert("Erreur lors de la suppression")
+      });
+    }
+  }
+
+  reloadRooms() {
+    this.roomsService.getRooms().subscribe(data => {
+      this.rooms = data;
+    });
+  }
+
+  openCreateRoomDialog() {
+    alert("Page de création de salle à implémenter !");
+  }
 
   goTo(section: string) {
     switch (section) {
@@ -48,6 +74,10 @@ export class RoomsListComponent {
   }
 
   reserveRoom(room: any) {
-  this.router.navigate(['/reservations'], { queryParams: { room: room.name } });
-}
+    this.router.navigate(['/reservations'], { queryParams: { room: room.nom || room.name } });
+  }
+
+  goToCreateRoom() {
+    this.router.navigate(['/rooms/create']);
+  }
 }

@@ -17,7 +17,7 @@ export const routes: Routes = [
   },
   {
   path: 'profile',
-  canActivate: [AuthGuard], // protect with your guard
+  canActivate: [AuthGuard], 
   loadComponent: () => import('./pages/profile/profile').then(m => m.ProfileComponent)
   },
 
@@ -30,19 +30,23 @@ export const routes: Routes = [
     path: 'rooms',
     canActivate: [AuthGuard],
     loadComponent: () =>import('./pages/rooms-list/rooms-list').then(m => m.RoomsListComponent),
-    // Add canActivate: [AuthGuard] if protection is needed
+    
   },
    {
-    path: 'reservations', // or 'reservation' if you prefer
-    canActivate: [AuthGuard], // Only if you want the route protected
+    path: 'reservations', 
+    canActivate: [AuthGuard], 
     loadComponent: () => import('./pages/reservations/reservations').then(m => m.ReservationsComponent)
   },
   {
   path: 'history',
-  canActivate: [AuthGuard], // if you want it protected
+  canActivate: [AuthGuard], 
   loadComponent: () => import('./pages/reservation-history/reservation-history').then(m => m.ReservationHistoryComponent)
   },
-
+  {
+  path: 'rooms/create',
+  canActivate: [AuthGuard], 
+  loadComponent: () => import('./pages/create-room/create-room').then(m => m.CreateRoomComponent),
+  },
   {
     path: '',
     redirectTo: 'login',
