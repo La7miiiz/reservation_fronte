@@ -1,0 +1,18 @@
+.history-layout {
+  display: flex;
+}
+
+.history-main {
+  margin-left: 240px; /* match .side-nav width */
+  padding: 48px;
+}
+
+.reservation-card {
+  background: #e5eafd;
+  color: #222;
+  border-radius: 8px;
+  padding: 15px 26px;
+  font-size: 1.05rem;
+  box-shadow: 0 1px 4px rgba(40,53,147,0.07);
+  margin-bottom: 17px;
+}

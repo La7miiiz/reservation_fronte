@@ -1,6 +1,7 @@
 .profile-layout {
   display: flex;
   min-height: 70vh;
+  width: 100%;
 }
 
 .profile-main {

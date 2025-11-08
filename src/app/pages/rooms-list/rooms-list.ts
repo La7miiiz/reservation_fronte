@@ -48,7 +48,6 @@ export class RoomsListComponent {
   }
 
   reserveRoom(room: any) {
-    // Redirect to reservation or open modal
-    alert('Réserver ' + room.name + " (à implémenter)");
-  }
+  this.router.navigate(['/reservations'], { queryParams: { room: room.name } });
+}
 }

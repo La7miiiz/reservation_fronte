@@ -1,0 +1,17 @@
+<div class="history-layout">
+  <app-side-nav></app-side-nav>
+  <div class="history-main">
+    <h1>Historique des réservations</h1>
+    <div *ngIf="reservations.length > 0; else empty">
+      <div class="reservation-card" *ngFor="let r of reservations">
+        <div>
+          <strong>{{ r.room }}</strong> <br>
+          {{ r.date }} | {{ r.startTime }} - {{ r.endTime }}
+        </div>
+      </div>
+    </div>
+    <ng-template #empty>
+      <p>Aucune réservation enregistrée.</p>
+    </ng-template>
+  </div>
+</div>

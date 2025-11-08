@@ -14,10 +14,15 @@ export class SideNavComponent {
 
   goTo(section: string) {
     switch (section) {
-      case 'reservations': this.router.navigateByUrl('/reservations'); break;
+      case 'history': this.router.navigateByUrl('/history'); break;
       case 'profile': this.router.navigateByUrl('/profile'); break;
       case 'home': this.router.navigateByUrl('/home'); break;
       case 'rooms': this.router.navigateByUrl('/rooms'); break;
     }
   }
+  logout() {
+  localStorage.removeItem('salle_token');
+  localStorage.removeItem('user_name');
+  this.router.navigate(['/login'], { replaceUrl: true });
+}
 }

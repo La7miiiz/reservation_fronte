@@ -1,26 +1,44 @@
 .side-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;      /* Full viewport height */
   background: #283593;
-  padding: 260px 20px;
+  padding: 36px 20px;
   display: flex;
   flex-direction: column;
-  position: fixed; 
   gap: 18px;
-  min-width: 170px;
+  min-width: 210px;
+  border-radius: 0 12px 10px 0;
+  align-items: center;
+  z-index: 100;
 }
+
 
 .side-nav button {
   background: #fff;
   color: #283593;
   border: none;
-  border-radius: 4px;
-  padding: 12px;
-  font-size: 1rem;
+  border-radius: 8px;
+  padding: 14px 28px;
+  font-size: 1.1rem;
   cursor: pointer;
   font-weight: bold;
   transition: background 0.16s, color 0.16s;
+  width: 100%;
+  margin-bottom: 12px;
 }
 
 .side-nav button:hover {
   background: #e3e7ee;
   color: #1a237e;
+}
+.side-nav .logout-btn {
+  background: #e53935;
+  color: #fff;
+  margin-top: 40px;
+}
+
+.side-nav .logout-btn:hover {
+  background: #ab2321;
 }

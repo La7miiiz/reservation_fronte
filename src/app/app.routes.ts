@@ -28,10 +28,21 @@ export const routes: Routes = [
   },
   {
     path: 'rooms',
-    loadComponent: () =>
-      import('./pages/rooms-list/rooms-list').then((m) => m.RoomsListComponent),
+    canActivate: [AuthGuard],
+    loadComponent: () =>import('./pages/rooms-list/rooms-list').then(m => m.RoomsListComponent),
     // Add canActivate: [AuthGuard] if protection is needed
   },
+   {
+    path: 'reservations', // or 'reservation' if you prefer
+    canActivate: [AuthGuard], // Only if you want the route protected
+    loadComponent: () => import('./pages/reservations/reservations').then(m => m.ReservationsComponent)
+  },
+  {
+  path: 'history',
+  canActivate: [AuthGuard], // if you want it protected
+  loadComponent: () => import('./pages/reservation-history/reservation-history').then(m => m.ReservationHistoryComponent)
+  },
+
   {
     path: '',
     redirectTo: 'login',

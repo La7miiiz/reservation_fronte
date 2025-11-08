@@ -1,0 +1,30 @@
+<div class="reservation-layout">
+  <app-side-nav></app-side-nav>
+  <div class="reservation-main">
+    <h1>Réserver une salle</h1>
+    <form class="reservation-form" (ngSubmit)="submitReservation()" [formGroup]="reservationForm">
+      <label for="room">Salle</label>
+      <select id="room" formControlName="room" required>
+        <option value="" disabled>Choisissez une salle</option>
+        <option *ngFor="let room of rooms" [value]="room.name">{{ room.name }}</option>
+      </select>
+
+      <label for="date">Date</label>
+      <input type="date" id="date" formControlName="date" required />
+
+      <label for="startTime">Heure de début</label>
+      <input type="time" id="startTime" formControlName="startTime" required />
+
+      <label for="endTime">Heure de fin</label>
+      <input type="time" id="endTime" formControlName="endTime" required />
+
+      <button type="submit" [disabled]="reservationForm.invalid">Envoyer la réservation</button>
+    </form>
+    <ng-template #noRes>
+      <p>Aucune réservation pour l'instant.</p>
+    </ng-template>
+  </div>
+</div>
+<div *ngIf="reservationSuccess" class="reservation-success-fixed">
+  Réservation effectuée avec succès !
+</div>

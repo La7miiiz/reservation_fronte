@@ -24,7 +24,7 @@ export class ProfileComponent implements OnInit {
       this.user = {
         nom: payload?.nom || payload?.name || payload?.sub,
         email: payload?.email || payload?.sub,
-        profilePic: '' // Add user profile image URL if you have one
+        profilePic: '' // Add user profile image UR L if you have one
       };
     }
   }
