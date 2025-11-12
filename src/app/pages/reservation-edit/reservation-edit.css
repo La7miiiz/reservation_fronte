@@ -1,0 +1,84 @@
+.edit-layout {
+  max-width: 440px;
+  margin: 48px auto;
+  padding: 40px 35px 32px 35px;
+  background: #f8faff;
+  border-radius: 18px;
+  box-shadow: 0 2px 24px rgba(50,90,160,0.08);
+}
+
+.edit-layout h2 {
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 22px;
+}
+
+form label {
+  display: block;
+  font-weight: 600;
+  margin: 18px 0 6px 0;
+  color: #27336b;
+}
+
+input[type="date"], input[type="time"], select {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 5px;
+  border: 1.5px solid #bfc7df;
+  font-size: 1rem;
+  margin-bottom: 10px;
+  transition: border 0.2s;
+}
+input[type="date"]:focus, input[type="time"]:focus, select:focus {
+  border: 1.5px solid #5377fb;
+}
+
+button[type="submit"], .edit-layout button[type="button"] {
+  padding: 9px 20px;
+  margin-top: 18px;
+  margin-right: 12px;
+  border-radius: 6px;
+  border: none;
+  font-weight: 600;
+  font-size: 1.07rem;
+  transition: background 0.18s;
+  cursor: pointer;
+}
+
+button[type="submit"] {
+  background: #5377fb;
+  color: #fff;
+}
+button[type="submit"]:hover {
+  background: #3e5dcb;
+}
+.edit-layout button[type="button"] {
+  background: #f0f2f7;
+  color: #304080;
+}
+.edit-layout button[type="button"]:hover {
+  background: #e7eafb;
+}
+
+.reservation-success-fixed {
+  margin-top: 18px;
+  background: #e2ffe7;
+  color: #148439;
+  border-left: 5px solid #30cc67;
+  padding: 11px 17px;
+  border-radius: 5px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.reservation-error-fixed {
+  margin-top: 18px;
+  background: #ffeaea;
+  color: #b30000;
+  border-left: 5px solid #ff3d3d;
+  padding: 11px 17px;
+  border-radius: 5px;
+  font-weight: 600;
+  text-align: center;
+}

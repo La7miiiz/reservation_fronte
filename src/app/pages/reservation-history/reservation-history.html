@@ -2,16 +2,21 @@
   <app-side-nav></app-side-nav>
   <div class="history-main">
     <h1>Historique des réservations</h1>
-    <div *ngIf="reservations.length > 0; else empty">
-      <div class="reservation-card" *ngFor="let r of reservations">
-        <div>
-          <strong>{{ r.room }}</strong> <br>
-          {{ r.date }} | {{ r.startTime }} - {{ r.endTime }}
-        </div>
+    <div *ngIf="loading">Chargement...</div>
+    <div *ngIf="error" class="reservation-error-fixed">{{ error }}</div>
+    <div *ngIf="!loading && !error">
+      <div *ngIf="reservations.length === 0">
+        Aucune réservation trouvée.
+      </div>
+      <div *ngFor="let res of reservations" class="history-card">
+        <strong>Salle :</strong> {{ res.nom || res.salle?.nom || '-' }}<br>
+        <strong>Début :</strong> {{ res.dateDebut | date:'short' }}<br>
+        <strong>Fin :</strong> {{ res.dateFin | date:'short' }}<br>
+        <strong>Statut :</strong> {{ res.statut }}
+        <button *ngIf="isAdmin" class="delete-btn" (click)="deleteReservation(res.id)">Supprimer</button>
+        <button *ngIf="isAdmin" class="edit-btn" (click)="editReservation(res.id)">Éditer</button>
+
       </div>
     </div>
-    <ng-template #empty>
-      <p>Aucune réservation enregistrée.</p>
-    </ng-template>
   </div>
 </div>

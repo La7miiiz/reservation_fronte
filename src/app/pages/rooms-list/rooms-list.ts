@@ -41,7 +41,6 @@ export class RoomsListComponent implements OnInit {
     if (confirm(`Voulez-vous vraiment supprimer ${salle.nom} ?`)) {
       this.roomsService.deleteRoom(salle.id).subscribe({
         next: () => this.reloadRooms(),
-        error: err => alert("Erreur lors de la suppression")
       });
     }
   }
@@ -74,10 +73,10 @@ export class RoomsListComponent implements OnInit {
   }
 
   reserveRoom(room: any) {
-    this.router.navigate(['/reservations'], { queryParams: { room: room.nom || room.name } });
-  }
-
+  this.router.navigate(['/reservations'], { queryParams: { room: room.nom || room.name } });
+}
   goToCreateRoom() {
     this.router.navigate(['/rooms/create']);
   }
+  
 }

@@ -11,12 +11,6 @@
 
       <label for="description">Description</label>
         <textarea id="description" formControlName="description" rows="3" required></textarea>
-
-      <label>
-        <input type="checkbox" formControlName="disponible"/>
-        Disponible
-      </label>
-
       <button type="submit" [disabled]="roomForm.invalid">Créer</button>
       <div *ngIf="success" class="room-success">Salle créée avec succès!</div>
     </form>

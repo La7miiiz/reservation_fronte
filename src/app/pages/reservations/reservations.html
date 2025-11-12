@@ -5,9 +5,12 @@
     <form class="reservation-form" (ngSubmit)="submitReservation()" [formGroup]="reservationForm">
       <label for="room">Salle</label>
       <select id="room" formControlName="room" required>
-        <option value="" disabled>Choisissez une salle</option>
-        <option *ngFor="let room of rooms" [value]="room.name">{{ room.name }}</option>
-      </select>
+  <option value="" disabled>Choisissez une salle</option>
+  <option *ngFor="let room of rooms" [value]="room.nom || room.name">
+  {{ room.nom || room.name }}
+</option>
+
+</select>
 
       <label for="date">Date</label>
       <input type="date" id="date" formControlName="date" required />
@@ -20,11 +23,12 @@
 
       <button type="submit" [disabled]="reservationForm.invalid">Envoyer la réservation</button>
     </form>
-    <ng-template #noRes>
-      <p>Aucune réservation pour l'instant.</p>
-    </ng-template>
-  </div>
+
+    <div *ngIf="reservationSuccess" class="reservation-success-fixed">
+      Réservation effectuée avec succès !
+    </div>
+    <div *ngIf="reservationError" class="reservation-error-fixed">
+  {{ reservationError }}
 </div>
-<div *ngIf="reservationSuccess" class="reservation-success-fixed">
-  Réservation effectuée avec succès !
+  </div>
 </div>

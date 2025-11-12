@@ -37,16 +37,29 @@ export const routes: Routes = [
     canActivate: [AuthGuard], 
     loadComponent: () => import('./pages/reservations/reservations').then(m => m.ReservationsComponent)
   },
+  
   {
   path: 'history',
   canActivate: [AuthGuard], 
   loadComponent: () => import('./pages/reservation-history/reservation-history').then(m => m.ReservationHistoryComponent)
   },
   {
+  path: 'reservations/edit/:id',
+  canActivate: [AuthGuard],
+  loadComponent: () => import('./pages/reservation-edit/reservation-edit')
+    .then(m => m.ReservationEditComponent)
+  },
+  {
   path: 'rooms/create',
   canActivate: [AuthGuard], 
   loadComponent: () => import('./pages/create-room/create-room').then(m => m.CreateRoomComponent),
   },
+  {
+  path: 'rooms/edit/:id',
+  canActivate: [AuthGuard], 
+  loadComponent: () => import('./pages/edit-room/edit-room').then(m => m.EditRoomComponent)
+  },
+
   {
     path: '',
     redirectTo: 'login',

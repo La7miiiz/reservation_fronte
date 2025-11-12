@@ -1,0 +1,19 @@
+<div class="edit-room-layout">
+  <app-side-nav></app-side-nav>
+  <div class="edit-room-main">
+    <h1>Modifier une salle</h1>
+    <form [formGroup]="roomForm" (ngSubmit)="submitRoom()" class="edit-room-form">
+      <label for="nom">Nom de la salle</label>
+      <input id="nom" formControlName="nom" required />
+
+      <label for="description">Description</label>
+      <textarea id="description" formControlName="description" rows="3" required></textarea>
+
+      <label for="capacite">Capacité</label>
+      <input id="capacite" type="number" min="1" formControlName="capacite" required />
+      
+      <button type="submit" [disabled]="roomForm.invalid">Enregistrer</button>
+      <div *ngIf="success" class="room-success">Salle modifiée avec succès!</div>
+    </form>
+  </div>
+</div>

@@ -95,6 +95,22 @@ h2 {
   z-index: 9999;
   animation: fadeIn 0.4s;
 }
+.reservation-error-fixed {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100vw;
+  background: #af4c4c;
+  color: #fff;
+  padding: 18px 0;
+  font-size: 1.1rem;
+  text-align: center;
+  border-radius: 0;
+  box-shadow: 0 -2px 12px rgba(40,53,147,0.09);
+  z-index: 9999;
+  animation: fadeIn 0.4s;
+}
+
 
 @keyframes fadeIn {
   from { opacity: 0; }

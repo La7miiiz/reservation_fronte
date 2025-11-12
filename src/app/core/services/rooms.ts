@@ -19,6 +19,13 @@ export class RoomsService {
   deleteRoom(id: number) {
   return this.http.delete(`http://localhost:8081/api/salles/${id}`);
 }
+getRoom(id: number) {
+  return this.http.get<any>(`http://localhost:8081/api/salles/${id}`);
+}
+
+updateRoom(id: number, room: any) {
+  return this.http.put(`http://localhost:8081/api/salles/${id}`, room);
+}
 
 
 }
