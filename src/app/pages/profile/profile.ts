@@ -1,53 +1,76 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { UserService } from '../../core/services/user';
+import { StatsService } from '../../core/services/stats';
 import { CommonModule } from '@angular/common';
-import { parseJwt } from '../../core/utils/jwt-utils';
-import { SideNavComponent } from "../../shared/side-nav/side-nav"; // adjust path
+import { ReactiveFormsModule } from '@angular/forms';
+
 
 @Component({
   selector: 'app-profile',
   standalone: true,
-  imports: [CommonModule, SideNavComponent],
   templateUrl: './profile.html',
   styleUrls: ['./profile.css'],
+  imports: [CommonModule, ReactiveFormsModule]
 })
 export class ProfileComponent implements OnInit {
-  private router = inject(Router);
-
   user: any = {};
-  defaultProfilePic = 'https://ui-avatars.com/api/?name=Profil&background=346AE3&color=fff';
+  editForm: FormGroup;
+  showEdit = false;
+  stats: any = {};
+  loading = true;
+  error: string | null = null;
+
+  constructor(
+    private fb: FormBuilder,
+    private userService: UserService,
+    private statsService: StatsService,
+    private router: Router
+  ) {
+    this.editForm = this.fb.group({
+      username: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      oldPassword: [''],
+      newPassword: ['']
+      // Add name, etc if needed
+    });
+  }
 
   ngOnInit() {
-    const token = localStorage.getItem('salle_token');
-    if (token) {
-      const payload = parseJwt(token);
-      this.user = {
-        nom: payload?.nom || payload?.name || payload?.sub,
-        email: payload?.email || payload?.sub,
-        profilePic: '' // Add user profile image UR L if you have one
-      };
-    }
+    this.userService.getProfile().subscribe({
+      next: (profile: any) => {
+        this.user = profile;
+        this.editForm.patchValue({
+          username: profile.username,
+          email: profile.email
+        });
+        if (this.user.role === 'ADMIN') {
+          this.statsService.getAdminStats().subscribe({
+            next: (s: any) => this.stats = s
+          });
+        }
+        this.loading = false;
+      },
+      error: (_: any) => {
+        this.error = "Échec de chargement du profil.";
+        this.loading = false;
+      }
+    });
   }
 
-  goTo(section: string) {
-    switch (section) {
-      case 'reservations':
-        this.router.navigateByUrl('/reservations');
-        break;
-      case 'profile':
-        this.router.navigateByUrl('/profile');
-        break;
-      case 'home':
-        this.router.navigateByUrl('/home');
-        break;
-      case 'rooms':
-        this.router.navigateByUrl('/rooms');
-        break;
-    }
-  }
+  openEditProfile() { this.showEdit = true; }
+  cancelEdit() { this.showEdit = false; }
 
-  editProfile() {
-    // Open edit modal or navigate to edit page
-    alert('Fonction éditer le profil à implémenter !');
+  saveProfile() {
+    if (this.editForm.valid) {
+      this.userService.updateProfile(this.editForm.value).subscribe({
+        next: (updated: any) => {
+          this.user = updated;
+          this.showEdit = false;
+        },
+        error: (_: any) => this.error = "Erreur lors de la mise à jour du profil."
+      });
+    }
   }
 }

@@ -24,5 +24,4 @@ export class ReservationService {
   getReservationById(id: number): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/${id}`);
   }
-
 }

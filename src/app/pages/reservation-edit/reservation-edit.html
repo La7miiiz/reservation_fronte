@@ -1,36 +1,48 @@
 <div class="edit-layout">
   <h2>Modifier la réservation</h2>
   <form [formGroup]="editForm" (ngSubmit)="submit()">
+    
     <label>
-      Salle:
+      Salle :
       <select formControlName="room">
         <option *ngFor="let r of rooms" [value]="r.id">{{ r.nom }}</option>
       </select>
-    </label><br>
+    </label>
+
     <label>
-      Date:
+      Date :
       <input type="date" formControlName="date">
-    </label><br>
+    </label>
+
     <label>
-      Heure de début:
+      Heure de début :
       <input type="time" formControlName="startTime">
-    </label><br>
+    </label>
+
     <label>
-      Heure de fin:
+      Heure de fin :
       <input type="time" formControlName="endTime">
-    </label><br>
-    <label>
-  Statut:
-  <select formControlName="statut">
-    <option value="ACTIVE">Active</option>
-    <option value="ANNULEE">Annulée</option>
-    <option value="EXPIREE">Expirée</option>
-  </select>
-</label><br>
+    </label>
+    
+    <!-- Admins can edit the status -->
+    <label *ngIf="isAdmin">
+      Statut :
+      <select formControlName="statut">
+        <option value="ACTIVE">Active</option>
+        <option value="EXPIREE">Expirée</option>
+      </select>
+    </label>
+    <!-- Non-admins see read-only status -->
+    <div *ngIf="!isAdmin">
+      <label>Statut :</label>
+      <span>{{ editForm.get('statut')?.value }}</span>
+    </div>
+
     <button type="submit" [disabled]="editForm.invalid">Enregistrer</button>
     <button type="button" (click)="onCancel()">Annuler</button>
+
+    <div *ngIf="error" class="reservation-error-fixed">{{ error }}</div>
+    <div *ngIf="success" class="reservation-success-fixed">Réservation modifiée avec succès !</div>
+    <div *ngIf="loading">Chargement...</div>
   </form>
-  <div *ngIf="error" class="reservation-error-fixed">{{ error }}</div>
-  <div *ngIf="success" class="reservation-success-fixed">Réservation modifiée avec succès !</div>
-  <div *ngIf="loading">Chargement...</div>
 </div>

@@ -75,6 +75,7 @@ export class ReservationsComponent implements OnInit {
 }
 
 
+
   ngOnInit() {
     // Fetch rooms first, then apply query param patch
     this.roomsService.getRooms().subscribe(data => {

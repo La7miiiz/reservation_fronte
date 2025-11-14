@@ -1,60 +1,10 @@
-.profile-layout {
-  display: flex;
-  min-height: 70vh;
-  width: 100%;
-}
-
-.profile-main {
-  flex: 1;
-  margin-left: 240px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.profile-card {
-  background: #f6f8fc;
-  padding: 38px 34px;
-  border-radius: 10px;
-  box-shadow: 0 2px 10px rgba(40,53,147,0.09);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  min-width: 320px;
-}
-
-.profile-card h2 {
-  margin-bottom: 10px;
-  color: #283593;
-  font-weight: bold;
-}
-
-.profile-card p {
-  margin-bottom: 26px;
-  font-size: 1.1rem;
-}
-
-.profile-picture {
-  width: 105px;
-  height: 105px;
-  border-radius: 50%;
-  margin-bottom: 18px;
-  object-fit: cover;
-  background: #fff;
-  border: 3px solid #283593;
-}
-
-.edit-btn {
-  background: #346AE3;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  padding: 10px 36px;
-  font-size: 1rem;
-  cursor: pointer;
-  font-weight: 500;
-}
-
-.edit-btn:hover {
-  background: #2748a0;
-}
+.profile-container { max-width: 600px; margin: 40px auto; padding: 30px; background: #f8f8fb; border-radius: 12px; box-shadow: 0 2px 20px #0001; }
+.profile-info { margin-bottom: 20px; }
+.profile-info > div { margin: 6px 0; }
+button { margin: 8px 8px 8px 0; padding: 8px 18px; border-radius: 5px; border: none; font-weight: bold; }
+.edit-modal { margin-top: 20px; }
+.edit-modal input { margin-left: 8px; }
+.error-alert { background: #fad1d1; color: #b00020; border: 1px solid #e37373; padding: 12px; border-radius: 5px; margin-top: 12px; }
+.dashboard { margin-top: 36px; }
+.dashboard-cards { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 16px; }
+.stat-card { background: #4249e7; color: #fff; padding: 18px 28px; border-radius: 10px; font-size: 1.1em; min-width: 150px; text-align: center; font-weight: 600; }
