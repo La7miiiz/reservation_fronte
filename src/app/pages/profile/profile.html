@@ -1,38 +1,53 @@
 <div class="profile-container">
-  <h2>Mon profil</h2>
-  <div *ngIf="error" class="error-alert">{{ error }}</div>
-  <div *ngIf="loading">Chargement...</div>
-  <div *ngIf="!loading">
-    <div class="profile-info">
-      <div><strong>Nom utilisateur :</strong> {{ user.username }}</div>
-      <div><strong>Email :</strong> {{ user.email }}</div>
-      <div><strong>Rôle :</strong> {{ user.role }}</div>
-    </div>
-    <button (click)="openEditProfile()">Éditer le profil</button>
-
-    <div *ngIf="showEdit" class="edit-modal">
-  <form [formGroup]="editForm" (ngSubmit)="saveProfile()">
-    <label>Nom utilisateur : <input formControlName="username"></label>
-    <label>Email : <input formControlName="email" type="email"></label>
-    <label>Ancien mot de passe : <input formControlName="oldPassword" type="password"></label>
-    <label>Nouveau mot de passe : <input formControlName="newPassword" type="password"></label>
-    <button type="submit" [disabled]="editForm.invalid">Enregistrer</button>
-    <button type="button" (click)="cancelEdit()">Annuler</button>
-  </form>
-</div>
-
-
-    <!-- ADMIN DASHBOARD -->
-    <div *ngIf="user.role==='ADMIN'" class="dashboard">
-      <h3>Dashboard Administrateur</h3>
-      <div class="dashboard-cards">
-        <div class="stat-card">Utilisateurs: {{ stats.users || 0 }}</div>
-        <div class="stat-card">Salles: {{ stats.rooms || 0 }}</div>
-        <div class="stat-card">Réservations: {{ stats.reservations || 0 }}</div>
-        <div class="stat-card">Actives: {{ stats.active || 0 }}</div>
-        <div class="stat-card">Expirées: {{ stats.expired || 0 }}</div>
+  <app-side-nav></app-side-nav>
+  <div class="profile-content"> <!-- added wrapper for clear layout -->
+    <h2>Mon profil</h2>
+    <div *ngIf="error" class="error-alert">{{ error }}</div>
+    <div *ngIf="loading">Chargement...</div>
+    <div *ngIf="!loading">
+      <div class="profile-info">
+        
+<img [src]="'https://api.dicebear.com/9.x/thumbs/svg?seed=' + (user.avatarSeed || user.username)"
+  alt="User Avatar" 
+  class="avatar-img" 
+  (click)="showAvatarPicker = true"
+  style="cursor:pointer"
+/>       <div><strong>Nom utilisateur :</strong> {{ user.username }}</div>
+        <div><strong>Email :</strong> {{ user.email }}</div>
+        <div><strong>Rôle :</strong> {{ user.role }}</div>
       </div>
-      <!-- You can enhance with chart libraries for visuals -->
+      <button (click)="openEditProfile()">Éditer le profil</button>
+
+      <div *ngIf="showEdit" class="edit-modal">
+        <form [formGroup]="editForm" (ngSubmit)="saveProfile()">
+          <label>Nom utilisateur : <input formControlName="username"></label>
+          <label>Email : <input formControlName="email" type="email"></label>
+          <label>Ancien mot de passe : <input formControlName="oldPassword" type="password"></label>
+          <label>Nouveau mot de passe : <input formControlName="newPassword" type="password"></label>
+          <button type="submit" [disabled]="editForm.invalid">Enregistrer</button>
+          <button type="button" (click)="cancelEdit()">Annuler</button>
+        </form>
+      </div>
+      
+      <!-- ADMIN DASHBOARD -->
+      <div *ngIf="user.role==='ADMIN'" class="dashboard">
+        <h3>Dashboard Administrateur</h3>
+        <div style="max-width:500px">
+          <canvas baseChart
+  [type]="'bar'"
+  [data]="barChartData"
+  [options]="barChartOptions">
+</canvas>
+        </div>
+      </div>
     </div>
-  </div>
-</div>
+    
+  </div> <!-- closes .profile-content -->
+</div> <!-- closes .profile-container -->
+<!-- Avatar Picker Modal -->
+<app-avatar-picker
+  *ngIf="showAvatarPicker"
+  [username]="user.username"
+  (avatarSelected)="onAvatarSelected($event)"
+  (closePicker)="showAvatarPicker = false">
+</app-avatar-picker>

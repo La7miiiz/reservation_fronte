@@ -1,76 +1,116 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { UserService } from '../../core/services/user';
 import { StatsService } from '../../core/services/stats';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule } from '@angular/forms';
-
+import { SideNavComponent } from '../../shared/side-nav/side-nav';
+import { BaseChartDirective } from 'ng2-charts';
+import { ChartData, ChartOptions } from 'chart.js';
+import { AvatarPickerComponent } from '../../avatar-picker/avatar-picker';
 
 @Component({
   selector: 'app-profile',
   standalone: true,
   templateUrl: './profile.html',
   styleUrls: ['./profile.css'],
-  imports: [CommonModule, ReactiveFormsModule]
+  imports: [CommonModule, ReactiveFormsModule, SideNavComponent, BaseChartDirective,AvatarPickerComponent],
 })
 export class ProfileComponent implements OnInit {
   user: any = {};
-  editForm: FormGroup;
+  editForm!: FormGroup;
   showEdit = false;
+  showAvatarPicker = false;
   stats: any = {};
   loading = true;
   error: string | null = null;
 
+  // Chart data
+  barChartData: ChartData<'bar'> = {
+    labels: ['Utilisateurs', 'Salles', 'Réservations', 'Actives', 'Expirées'],
+    datasets: [
+      {
+        label: 'Statistiques',
+        data: [0, 0, 0, 0, 0],
+        backgroundColor: '#5A9'
+      }
+    ]
+  };
+  barChartOptions: ChartOptions<'bar'> = { responsive: true };
+
+  // Avatar info
+  avatarStyle = 'thumbs';
+  avatarSeed = '';
+
   constructor(
     private fb: FormBuilder,
     private userService: UserService,
-    private statsService: StatsService,
-    private router: Router
-  ) {
-    this.editForm = this.fb.group({
-      username: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      oldPassword: [''],
-      newPassword: ['']
-      // Add name, etc if needed
-    });
-  }
+    private statsService: StatsService
+  ) {}
 
   ngOnInit() {
     this.userService.getProfile().subscribe({
       next: (profile: any) => {
         this.user = profile;
-        this.editForm.patchValue({
-          username: profile.username,
-          email: profile.email
+        this.avatarSeed = profile.username || 'anonymous';
+
+        this.editForm = this.fb.group({
+          username: [profile.username, Validators.required],
+          email: [profile.email, [Validators.required, Validators.email]],
+          oldPassword: [''],
+          newPassword: ['']
         });
-        if (this.user.role === 'ADMIN') {
+
+        if (profile.role === 'ADMIN') {
           this.statsService.getAdminStats().subscribe({
-            next: (s: any) => this.stats = s
+            next: (s: any) => {
+              this.barChartData = {
+                labels: ['Utilisateurs', 'Salles', 'Réservations', 'Actives', 'Expirées'],
+                datasets: [
+                  {
+                    label: 'Statistiques',
+                    data: [s.users || 0, s.rooms || 0, s.reservations || 0, s.active || 0, s.expired || 0],
+                    backgroundColor: '#5A9'
+                  }
+                ]
+              };
+            }
           });
         }
+
         this.loading = false;
       },
-      error: (_: any) => {
+      error: (_) => {
         this.error = "Échec de chargement du profil.";
         this.loading = false;
       }
     });
   }
 
-  openEditProfile() { this.showEdit = true; }
-  cancelEdit() { this.showEdit = false; }
+  openEditProfile() {
+    this.showEdit = true;
+  }
+  cancelEdit() {
+    this.showEdit = false;
+  }
 
   saveProfile() {
-    if (this.editForm.valid) {
+    if (this.editForm && this.editForm.valid) {
       this.userService.updateProfile(this.editForm.value).subscribe({
         next: (updated: any) => {
           this.user = updated;
           this.showEdit = false;
         },
-        error: (_: any) => this.error = "Erreur lors de la mise à jour du profil."
+        error: (_) => this.error = "Erreur lors de la mise à jour du profil."
       });
     }
+  }
+
+  onAvatarSelected(seed: string) {
+    this.avatarSeed = seed;
+    this.showAvatarPicker = false;
+    this.userService.updateProfile({ ...this.user, avatarSeed: this.avatarSeed }).subscribe({
+  next: (updated: any) => { this.user = updated; },
+  error: () => { this.error = "Erreur lors de la mise à jour de l'avatar."; }
+    });
   }
 }
