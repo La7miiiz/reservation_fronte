@@ -1,0 +1,31 @@
+<div class="main-layout">
+  <app-side-nav></app-side-nav>
+  <div class="profile-edit-container">
+    <h2>Modifier mon profil</h2>
+    <form *ngIf="editForm" [formGroup]="editForm" (ngSubmit)="saveProfile()">
+      <label>
+        Nom utilisateur :<br />
+        <input formControlName="username" />
+      </label>
+      <label>
+        Email :<br />
+        <input formControlName="email" type="email" />
+      </label>
+      <label>
+        Ancien mot de passe :<br />
+        <input formControlName="oldPassword" type="password" autocomplete="current-password" />
+      </label>
+      <label>
+        Nouveau mot de passe :<br />
+        <input formControlName="newPassword" type="password" autocomplete="new-password" />
+      </label>
+      <div class="button-row">
+        <button type="submit" [disabled]="editForm.invalid">Enregistrer</button>
+        <button type="button" (click)="cancelEdit()">Annuler</button>
+      </div>
+         <div *ngIf="successMessage" class="success-alert">{{ successMessage }}</div>
+        <div *ngIf="error" class="error-alert">{{ error }}</div>
+      <div *ngIf="error" class="error-alert">{{ error }}</div>
+    </form>
+  </div>
+</div>

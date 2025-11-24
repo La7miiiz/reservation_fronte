@@ -1,6 +1,6 @@
 <div class="profile-container">
   <app-side-nav></app-side-nav>
-  <div class="profile-content"> <!-- added wrapper for clear layout -->
+  <div class="profile-content"> 
     <h2>Mon profil</h2>
     <div *ngIf="error" class="error-alert">{{ error }}</div>
     <div *ngIf="loading">Chargement...</div>
@@ -12,11 +12,12 @@
   class="avatar-img" 
   (click)="showAvatarPicker = true"
   style="cursor:pointer"
-/>       <div><strong>Nom utilisateur :</strong> {{ user.username }}</div>
+/>       <div><strong>Nom utilisateur :</strong> {{ user.nom || user.username }}</div>
+
         <div><strong>Email :</strong> {{ user.email }}</div>
         <div><strong>Rôle :</strong> {{ user.role }}</div>
       </div>
-      <button (click)="openEditProfile()">Éditer le profil</button>
+      <button (click)="goToEditProfile()">Éditer le profil</button>
 
       <div *ngIf="showEdit" class="edit-modal">
         <form [formGroup]="editForm" (ngSubmit)="saveProfile()">
@@ -28,9 +29,7 @@
           <button type="button" (click)="cancelEdit()">Annuler</button>
         </form>
       </div>
-      
-      <!-- ADMIN DASHBOARD -->
-      <div *ngIf="user.role==='ADMIN'" class="dashboard">
+            <div *ngIf="user.role==='ADMIN'" class="dashboard">
         <h3>Dashboard Administrateur</h3>
         <div style="max-width:500px">
           <canvas baseChart
@@ -41,10 +40,85 @@
         </div>
       </div>
     </div>
+    <div *ngIf="user.role === 'ADMIN'" class="admin-logs">
+  <h3>Historique des actions (Logs)</h3>
+  <table *ngIf="logHistory.length > 0; else noLogs">
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Utilisateur</th>
+        <th>Action</th>
+        <th>Rôle</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let log of logHistory">
+        <td>{{ log.timestamp | date:'short' }}</td>
+        <td>{{ log.email }}</td>
+        <td>{{ log.action }}</td>
+        <td>{{ log.role }}</td>
+      </tr>
+    </tbody>
+  </table>
+  <ng-template #noLogs>
+    <div>Aucun historique à afficher.</div>
+  </ng-template>
+</div>
+<div *ngIf="user.role === 'ADMIN'" class="admin-users">
+  <h3>Liste des utilisateurs</h3>
+  <table *ngIf="usersList.length > 0; else noUsers">
+    <thead>
+      <tr>
+        <th>Nom</th>
+        <th>Email</th>
+        <th>Rôle</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let u of usersList">
+        <td>{{ u.nom }}</td>
+        <td>{{ u.email }}</td>
+        <td>{{ u.role }}</td>
+      </tr>
+    </tbody>
+  </table>
+  <ng-template #noUsers>
+    <div>Aucun utilisateur.</div>
+  </ng-template>
+</div>
+<div *ngIf="user.role === 'ADMIN'" class="admin-reservations">
+  <h3>Liste des réservations</h3>
+  <table *ngIf="reservationsList.length > 0; else noRes">
+    <thead>
+      <tr>
+        <th>Salle</th>
+        <th>Propriétaire</th>
+        <th>Date début</th>
+        <th>Date fin</th>
+        <th>Statut</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let r of reservationsList">
+        <td>{{ r.salle?.nom }}</td>
+        <td>{{ r.utilisateur?.nom || r.ownerName }}</td>
+        <td>{{ r.dateDebut | date:'short' }}</td>
+        <td>{{ r.dateFin | date:'short' }}</td>
+        <td>{{ r.statut }}</td>
+        <td><button (click)="cancelReservation(r.id)">Annuler</button></td>
+      </tr>
+    </tbody>
+  </table>
+  <ng-template #noRes>
+    <div>Aucune réservation.</div>
+  </ng-template>
+</div>
+
+
     
-  </div> <!-- closes .profile-content -->
-</div> <!-- closes .profile-container -->
-<!-- Avatar Picker Modal -->
+  </div> 
+</div> 
 <app-avatar-picker
   *ngIf="showAvatarPicker"
   [username]="user.username"

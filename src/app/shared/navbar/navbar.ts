@@ -1,7 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { parseJwt } from '../../core/utils/jwt-utils'; // Adjust path as needed
+import { UserService } from '../../core/services/user';
 
 @Component({
   selector: 'app-navbar',
@@ -11,18 +11,15 @@ import { parseJwt } from '../../core/utils/jwt-utils'; // Adjust path as needed
   styleUrls: ['./navbar.css'],
 })
 export class NavbarComponent implements OnInit {
-  private router = inject(Router);
-
   userName: string = 'Utilisateur';
 
+  constructor(private userService: UserService, private router: Router) {}
   ngOnInit() {
-    const token = localStorage.getItem('salle_token');
-if (token) {
-  const payload = parseJwt(token);
-  console.log(payload); // View it in your browser's console
-  // then adjust this line:
-  this.userName = payload?.nom || payload?.name || payload?.username || 'Utilisateur';
-}
+    this.userService.getProfile().subscribe({
+      next: (user: any) => {
+        this.userName = user.nom || user.username || user.email || 'Utilisateur';
+      }
+    });
   }
 
   goToProfile() {

@@ -16,7 +16,7 @@ export class ReservationHistoryComponent implements OnInit {
   reservations: any[] = [];
   loading = true;
   error: string | null = null;
-  isAdmin = true; // Set this using your auth/user logic
+  isAdmin = true; 
 
  constructor(
   private reservationService: ReservationService,
@@ -34,7 +34,6 @@ export class ReservationHistoryComponent implements OnInit {
         this.loading = false;
       }
     });
-    // TODO: Set isAdmin = true if current user is admin (from JWT/user service)
   }
 
   deleteReservation(id: number) {

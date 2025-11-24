@@ -17,7 +17,6 @@ export class AvatarPickerComponent {
   avatarSeeds: string[] = [];
 
   ngOnInit() {
-    // Show 6 unique thumb avatars based on username
     this.avatarSeeds = Array.from({ length: 6 }, (_, i) => `${this.username || 'user'}-${i}`);
   }
 

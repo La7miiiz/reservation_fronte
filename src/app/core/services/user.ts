@@ -15,4 +15,16 @@ private apiUrl = '/api/utilisateurs/me';
   updateProfile(data: any): Observable<any> {
     return this.http.put<any>(this.apiUrl, data);
   }
+  getLogs() {
+  return this.http.get<any[]>('/api/utilisateurs/logs');
+}
+getAllUsers() {
+  return this.http.get<any[]>('/api/utilisateurs');
+}
+getAllReservations() {
+  return this.http.get<any[]>('/api/reservations');
+}
+cancelReservation(id: number) {
+  return this.http.delete(`/api/reservations/${id}`);
+}
 }

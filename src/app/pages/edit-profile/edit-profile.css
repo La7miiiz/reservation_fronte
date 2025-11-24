@@ -1,0 +1,89 @@
+.main-layout {
+  display: flex;
+  min-height: 100vh;
+  background: #fff;
+}
+
+app-side-nav {
+  flex: 0 0 230px;
+}
+
+.profile-edit-container {
+  margin: 56px auto 0 auto;
+  padding: 32px 38px 24px 38px;
+  background: #f9f9fb;
+  border-radius: 16px;
+  box-shadow: 0 6px 32px #0001;
+  max-width: 420px;
+  flex: 1 1 auto;
+}
+
+.profile-edit-container h2 {
+  text-align: center;
+  margin-bottom: 24px;
+  font-weight: bold;
+  color: #284285;
+}
+
+form label {
+  display: block;
+  margin-bottom: 17px;
+  font-size: 1rem;
+  color: #2a2a2a;
+  font-weight: 500;
+}
+
+form input {
+  margin-top: 5px;
+  width: 100%;
+  padding: 8px 12px;
+  font-size: 1em;
+  border: 1px solid #dbeafe;
+  border-radius: 6px;
+  box-sizing: border-box;
+  background: #fff;
+}
+
+.button-row {
+  display: flex;
+  gap: 18px;
+  margin-top: 22px;
+  justify-content: center;
+}
+
+button[type="submit"], .profile-edit-container button {
+  padding: 8px 24px;
+  border-radius: 6px;
+  background: #5a9;
+  color: #fff;
+  border: none;
+  font-weight: bold;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+button[type="submit"]:disabled {
+  background: #b2bec3;
+  cursor: not-allowed;
+}
+button[type="button"] {
+  background: #ccc;
+  color: #222;
+}
+.error-alert {
+  color: #a22;
+  margin-top: 16px;
+  padding: 10px;
+  background: #feeaea;
+  border-radius: 6px;
+  text-align: center;
+}
+.success-alert {
+  color: #197d46;
+  margin-top: 12px;
+  padding: 10px;
+  background: #e6ffee;
+  border-radius: 6px;
+  text-align: center;
+  font-weight: bold;
+}

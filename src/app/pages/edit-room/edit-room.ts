@@ -42,7 +42,6 @@ export class EditRoomComponent implements OnInit {
   submitRoom() {
     if (this.roomForm.valid) {
       const updateRoom = { ...this.roomForm.getRawValue() };
-      // Ensure id is a number
       const id = Number(updateRoom.id);
       if (!id) {
         alert('ID de la salle non valide');

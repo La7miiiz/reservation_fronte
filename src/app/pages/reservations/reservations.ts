@@ -63,7 +63,6 @@ export class ReservationsComponent implements OnInit {
         this.reservationForm.reset();
       },
       error: (err) => {
-        // If backend sends informative error text:
         if (err.error && typeof err.error === "string" && err.error.includes("déjà réservée")) {
           this.reservationError = "Cette salle est déjà réservée sur cet intervalle !";
         } else {
@@ -77,7 +76,6 @@ export class ReservationsComponent implements OnInit {
 
 
   ngOnInit() {
-    // Fetch rooms first, then apply query param patch
     this.roomsService.getRooms().subscribe(data => {
       this.rooms = data;
       this.route.queryParams.subscribe(params => {

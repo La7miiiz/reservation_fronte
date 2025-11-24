@@ -8,12 +8,10 @@ export class AuthService {
 
   constructor(private http: HttpClient) {}
 
-  // Signup
   signup(payload: { email: string; motDePasse: string; role?: string }): Observable<any> {
     return this.http.post(`${this.baseUrl}/signup`, payload);
   }
 
-  // Login
   login(credentials: { email: string; motDePasse: string }): Observable<{ token: string }> {
     return this.http.post<{ token: string }>(`${this.baseUrl}/login`, credentials).pipe(
       tap((res) => {
@@ -24,17 +22,14 @@ export class AuthService {
     );
   }
 
-  // Logout
   logout(): void {
     localStorage.removeItem('salle_token');
   }
 
-  // Get token
   getToken(): string | null {
     return localStorage.getItem('salle_token');
   }
 
-  // Check if user is logged in
   isLoggedIn(): boolean {
     return !!localStorage.getItem('salle_token');
   }

@@ -20,7 +20,7 @@ export class ReservationEditComponent implements OnInit {
   error: string | null = null;
   success: boolean = false;
   loading: boolean = true;
-  isAdmin = false; // <-- Set to true if user is admin (add your logic here)
+  isAdmin = false; 
 
   constructor(
     private fb: FormBuilder,
@@ -67,9 +67,6 @@ export class ReservationEditComponent implements OnInit {
         this.loading = false;
       }
     });
-
-    // TODO: Replace with your real admin detection logic
-    // Example: this.isAdmin = yourUserService.isAdmin();
   }
 
   submit() {
@@ -81,7 +78,6 @@ export class ReservationEditComponent implements OnInit {
         dateDebut: `${date}T${startTime}`,
         dateFin: `${date}T${endTime}`
       };
-      // Only send statut if admin
       if (this.isAdmin) {
         payload.statut = statut;
       }
